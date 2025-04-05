@@ -23,6 +23,18 @@ class EmployeeRepositoryImplementation implements EmployeeRepository {
   }
 
   @override
+  ResultFuture<Employee> getEmployeeById(int id) async {
+    try {
+      final result = await _localDataSource.getEmployeeById(id);
+      print("get employee $result");
+      return Right(result);
+    } on Exception catch (exception) {
+      print("local db exception: $exception");
+      return Left(LocalDBFailure.fromException(exception));
+    }
+  }
+
+  @override
   ResultFuture<void> addEmployee(Employee employee) async{
     try {
       print("CALLED");

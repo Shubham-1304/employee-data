@@ -56,6 +56,24 @@ class _EmployeeListState extends State<EmployeeList> {
               _previousEmployees.add(_employee);
             }
           }
+        } else if (state is EmployeeActionSuccess && state.message != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                state.message!,
+                style: Styles.regularStyleXS.copyWith(color: Colors.white),
+                overflow: TextOverflow.ellipsis,
+              ),
+              backgroundColor: CR.textColor,
+              action: state.showUndo
+                  ? SnackBarAction(
+                      label: "Undo",
+                      textColor: CR.primaryColor,
+                      onPressed: () =>
+                          context.read<EmployeeCubit>().undoDelete())
+                  : null,
+            ),
+          );
         }
       },
       builder: (context, state) {
@@ -111,18 +129,20 @@ class _EmployeeListState extends State<EmployeeList> {
                   child: Visibility(
                     visible: _previousEmployees.isNotEmpty,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
                       child: Text(
                         "Swipe left to delete",
-                        style: Styles.regularStyleXS
-                            .copyWith(color: CR.hintColor),
+                        style:
+                            Styles.regularStyleXS.copyWith(color: CR.hintColor),
                       ),
                     ),
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: SizedBox(height: 32.h,)
-                ),
+                    child: SizedBox(
+                  height: 32.h,
+                )),
               ])
             : Center(
                 child: Column(

@@ -88,191 +88,213 @@ class _EmployeeFormState extends State<EmployeeForm> {
   }
 
   void _showCustomFromDatePicker(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
-          backgroundColor: Colors.black.withOpacity(0.4),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: CustomDatePicker(
-            initialDate: selectedFromDate,
-            dateType: DateType.from,
-            onDateSelected: (date) {
-              setState(() {
-                selectedFromDate = date!;
-              });
-              _fromDateController.text =
-                  DateFormat('d MMM yyyy').format(selectedFromDate);
+    Future.delayed(const Duration(milliseconds: 300), () {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
               Navigator.of(context).pop();
-              _fromDateFocus.unfocus();
+              FocusScope.of(context).unfocus();
             },
-            onCancelled: () {
-              Navigator.of(context).pop();
-              _fromDateFocus.unfocus();
-            },
-            invalidDates: selectedTillDate,
-          ),
-        );
-      },
-    );
+            child: Dialog(
+              insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+              backgroundColor: Colors.black.withOpacity(0.4),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: CustomDatePicker(
+                initialDate: selectedFromDate,
+                dateType: DateType.from,
+                onDateSelected: (date) {
+                  setState(() {
+                    selectedFromDate = date!;
+                  });
+                  _fromDateController.text =
+                      DateFormat('d MMM yyyy').format(selectedFromDate);
+                  Navigator.of(context).pop();
+                  _fromDateFocus.unfocus();
+                },
+                onCancelled: () {
+                  Navigator.of(context).pop();
+                  _fromDateFocus.unfocus();
+                },
+                invalidDates: selectedTillDate,
+              ),
+            ),
+          );
+        },
+      );
+    });
   }
 
   void _showCustomTillDatePicker(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
-          backgroundColor: Colors.black.withOpacity(0.4),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: CustomDatePicker(
-            initialDate: selectedTillDate,
-            dateType: DateType.till,
-            onDateSelected: (date) {
-              if (date != null) {
-                setState(() {
-                  selectedTillDate = date;
-                });
-                _tillDateController.text =
-                    DateFormat('d MMM yyyy').format(selectedTillDate!);
-              } else {
-                selectedTillDate = null;
-                _tillDateController.text = "";
-              }
+    Future.delayed(const Duration(milliseconds: 300), () {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
               Navigator.of(context).pop();
-              _tillDateFocus.unfocus();
+              FocusScope.of(context).unfocus();
             },
-            onCancelled: () {
-              Navigator.of(context).pop();
-              _tillDateFocus.unfocus();
-            },
-            invalidDates: selectedFromDate,
-          ),
-        );
-      },
-    );
+            child: Dialog(
+              insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+              backgroundColor: Colors.black.withOpacity(0.4),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: CustomDatePicker(
+                initialDate: selectedTillDate,
+                dateType: DateType.till,
+                onDateSelected: (date) {
+                  if (date != null) {
+                    setState(() {
+                      selectedTillDate = date;
+                    });
+                    _tillDateController.text =
+                        DateFormat('d MMM yyyy').format(selectedTillDate!);
+                  } else {
+                    selectedTillDate = null;
+                    _tillDateController.text = "";
+                  }
+                  Navigator.of(context).pop();
+                  _tillDateFocus.unfocus();
+                },
+                onCancelled: () {
+                  Navigator.of(context).pop();
+                  _tillDateFocus.unfocus();
+                },
+                invalidDates: selectedFromDate,
+              ),
+            ),
+          );
+        },
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(top: 24.h),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CustomTextField(
-                      controller: _nameController,
-                      focus: _nameFocus,
-                      onChanged: (_) {},
-                      hintText: "Employee name",
-                      prefixIcon: const Icon(
-                        Icons.person_outline,
-                        color: CR.primaryColor,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      behavior: HitTestBehavior.opaque,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(top: 24.h),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        controller: _nameController,
+                        focus: _nameFocus,
+                        onChanged: (_) {},
+                        hintText: "Employee name",
+                        prefixIcon: const Icon(
+                          Icons.person_outline,
+                          color: CR.primaryColor,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 23.h,
-                    ),
-                    CustomTextField(
-                      controller: _roleController,
-                      focus: _roleFocus,
-                      hintText: "Select role",
-                      readOnly: true,
-                      prefixIcon: const Icon(
-                        Icons.work_outline,
-                        color: CR.primaryColor,
+                      SizedBox(
+                        height: 23.h,
                       ),
-                      suffixWidget: const Icon(
-                        Icons.arrow_drop_down,
-                        color: CR.primaryColor,
+                      CustomTextField(
+                        controller: _roleController,
+                        focus: _roleFocus,
+                        hintText: "Select role",
+                        readOnly: true,
+                        prefixIcon: const Icon(
+                          Icons.work_outline,
+                          color: CR.primaryColor,
+                        ),
+                        suffixWidget: const Icon(
+                          Icons.arrow_drop_down,
+                          color: CR.primaryColor,
+                        ),
+                        onTapEvent: () => _roleBottomsheet(context),
                       ),
-                      onTapEvent: () => _roleBottomsheet(context),
-                    ),
-                    SizedBox(
-                      height: 23.h,
-                    ),
-                    LayoutBuilder(builder: (context, constraints) {
-                      bool isNarrow = constraints.maxWidth < 150.w;
-                      return Flex(
-                        direction: isNarrow ? Axis.vertical : Axis.horizontal,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            child: CustomTextField(
-                              controller: _fromDateController,
-                              focus: _fromDateFocus,
-                              hintText: "Joining Date",
-                              readOnly: true,
-                              prefixIcon: SvgPicture.asset(
-                                'assets/images/icons/calender_icon.svg',
+                      SizedBox(
+                        height: 23.h,
+                      ),
+                      LayoutBuilder(builder: (context, constraints) {
+                        bool isNarrow = constraints.maxWidth < 150.w;
+                        return Flex(
+                          direction: isNarrow ? Axis.vertical : Axis.horizontal,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Flexible(
+                              child: CustomTextField(
+                                controller: _fromDateController,
+                                focus: _fromDateFocus,
+                                hintText: "Joining Date",
+                                readOnly: true,
+                                prefixIcon: SvgPicture.asset(
+                                  'assets/images/icons/calender_icon.svg',
+                                ),
+                                onTapEvent: () =>
+                                    _showCustomFromDatePicker(context),
                               ),
-                              onTapEvent: () =>
-                                  _showCustomFromDatePicker(context),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 10.h),
-                            child: Icon(
-                              isNarrow
-                                  ? Icons.arrow_downward
-                                  : Icons.arrow_forward,
-                              color: CR.primaryColor,
-                            ),
-                          ),
-                          Flexible(
-                            child: CustomTextField(
-                              controller: _tillDateController,
-                              focus: _tillDateFocus,
-                              hintText: "No date",
-                              readOnly: true,
-                              prefixIcon: SvgPicture.asset(
-                                'assets/images/icons/calender_icon.svg',
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16.w, vertical: 10.h),
+                              child: Icon(
+                                isNarrow
+                                    ? Icons.arrow_downward
+                                    : Icons.arrow_forward,
+                                color: CR.primaryColor,
                               ),
-                              onTapEvent: () =>
-                                  _showCustomTillDatePicker(context),
                             ),
-                          ),
-                        ],
-                      );
-                    })
-                  ],
+                            Flexible(
+                              child: CustomTextField(
+                                controller: _tillDateController,
+                                focus: _tillDateFocus,
+                                hintText: "No date",
+                                readOnly: true,
+                                prefixIcon: SvgPicture.asset(
+                                  'assets/images/icons/calender_icon.svg',
+                                ),
+                                onTapEvent: () =>
+                                    _showCustomTillDatePicker(context),
+                              ),
+                            ),
+                          ],
+                        );
+                      })
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          DetailsConfirmButton(
-              onCancel: () => Navigator.of(context).pop(),
-              onSave: () {
-                if (widget.employee != null) {
-                  context.read<EmployeeCubit>().updateEmployee(Employee(
-                        id: widget.employee!.id,
-                        name: _nameController.text,
-                        role: _roleController.text,
-                        fromDate: selectedFromDate,
-                        tillDate: selectedTillDate,
-                      ));
-                } else {
-                  context.read<EmployeeCubit>().addEmployee(Employee(
-                        name: _nameController.text,
-                        role: _roleController.text,
-                        fromDate: selectedFromDate,
-                        tillDate: selectedTillDate,
-                      ));
-                }
-                Navigator.of(context).pop();
-              }),
-        ],
+            DetailsConfirmButton(
+                onCancel: () => Navigator.of(context).pop(),
+                onSave: () {
+                  if (widget.employee != null) {
+                    context.read<EmployeeCubit>().updateEmployee(Employee(
+                          id: widget.employee!.id,
+                          name: _nameController.text,
+                          role: _roleController.text,
+                          fromDate: selectedFromDate,
+                          tillDate: selectedTillDate,
+                        ));
+                  } else {
+                    context.read<EmployeeCubit>().addEmployee(Employee(
+                          name: _nameController.text,
+                          role: _roleController.text,
+                          fromDate: selectedFromDate,
+                          tillDate: selectedTillDate,
+                        ));
+                  }
+                  Navigator.of(context).pop();
+                }),
+          ],
+        ),
       ),
     );
   }

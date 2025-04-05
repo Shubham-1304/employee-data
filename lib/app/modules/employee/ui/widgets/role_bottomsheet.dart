@@ -24,6 +24,7 @@ class RoleBottomsheet extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) => GestureDetector(
               onTap: () => Navigator.pop(context, Role.values[index].name),
+              behavior: HitTestBehavior.opaque,
               child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
                     child: RichText(

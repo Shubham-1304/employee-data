@@ -24,10 +24,6 @@ class EmployeeCard extends StatelessWidget {
         context.read<EmployeeCubit>().deleteEmployee(employee.id!);
         return false;
       },
-      onUpdate: (details) {
-        //  HERE USE THRESHOLD TO SHOW THAT FUNCTION CALL WAS SUCCESSFUL OR NOT
-      },
-      // onDismissed: (direction) {},
       background: Container(
         color: CR.deleteColor,
         alignment: Alignment.centerRight,

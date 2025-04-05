@@ -14,10 +14,12 @@ Future<void> init() async {
         addEmployee: sl(),
         updateEmployee: sl(),
         deleteEmployee: sl(),
+        getEmployeeById: sl(),
       ));
 
   // Use Cases
   sl.registerLazySingleton(() => GetEmployees(sl()));
+  sl.registerLazySingleton(() => GetEmployeeById(sl()));
   sl.registerLazySingleton(() => AddEmployee(sl()));
   sl.registerLazySingleton(() => UpdateEmployee(sl()));
   sl.registerLazySingleton(() => DeleteEmployee(sl()));

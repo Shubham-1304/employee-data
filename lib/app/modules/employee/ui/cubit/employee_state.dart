@@ -30,12 +30,10 @@ class EmployeeError extends EmployeeState {
 }
 
 class EmployeeActionSuccess extends EmployeeState {
-  final String message;
+  final String? message;
+  final bool showUndo;
   
-  const EmployeeActionSuccess(this.message);
-  
-  @override
-  List<Object> get props => [message];
+  const EmployeeActionSuccess({this.message, this.showUndo=false});
 }
 
 class EmployeeActionFailed extends EmployeeState {

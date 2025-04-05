@@ -6,7 +6,7 @@ import 'package:path/path.dart';
 
 abstract class EmployeeLocalDataSource {
   Future<List<EmployeeModel>> getEmployees();
-  // Future<void> cacheEmployees(List<EmployeeModel> employees);
+  Future<EmployeeModel> getEmployeeById(int id);
   Future<void> addEmployee(Employee employee);
   Future<void> updateEmployee(Employee employee);
   Future<void> deleteEmployee(int employeeId);
@@ -62,14 +62,18 @@ class EmployeeLocalDataSourceImplementation implements EmployeeLocalDataSource  
     // throw Exception('Rockets not cached');
   }
 
-  Future<Map<String, dynamic>?> getEmployeeById(int id) async {
+  @override
+  Future<EmployeeModel> getEmployeeById(int id) async {
     final db = await database;
-    final List<Map<String, dynamic>> result = await db.query(
+    final maps = await db.query(
       'employees',
       where: 'id = ?',
       whereArgs: [id],
     );
-    return result.isNotEmpty ? result.first : null;
+    if (maps.isEmpty){
+      throw Exception("No Employee found");
+    }
+    return EmployeeModel.fromLocalMap(maps.first);
   }
 
   @override

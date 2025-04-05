@@ -13,6 +13,22 @@ class GetEmployees extends UsecaseWithoutParams<List<Employee>> {
 }
 
 
+class GetEmployeeById extends UsecaseWithParams<Employee,GetEmployeeByIdParams> {
+  const GetEmployeeById(this._repository);
+
+  final EmployeeRepository _repository;
+
+  @override
+  ResultFuture<Employee> call(GetEmployeeByIdParams params) async => _repository.getEmployeeById(params.id);
+}
+
+class GetEmployeeByIdParams {
+  const GetEmployeeByIdParams(this.id);
+
+  final int id;
+}
+
+
 class AddEmployee extends UsecaseWithParams<void, AddEmployeeParams> {
   const AddEmployee(this._repository);
 
