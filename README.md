@@ -1,16 +1,10 @@
 # employee_data
 
-A new Flutter project.
+An app to list and do all other crud operations to maintain the employee data.
 
-## Getting Started
+## Architecture:-
+Clean Architecture: I have used clean architecture in this project. The reason for choosing clean architecture is to make the project flexible and easy for future development. Each folder has separate responsibility which allow us to make changes to minimal number of files/folders.
+For example: if in future we have to fetch and update the data on remote servers as well then we only need to make changes to repository and datasource folders. Also this architecture would help us to follow the 'separation of concern' principle.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## NOTES
+- For job role right now I have used enum instead of enity because in current scenario it is more efficient as we don't have to read the data from local database and enum data are also constants

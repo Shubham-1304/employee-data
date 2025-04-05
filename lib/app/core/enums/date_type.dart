@@ -1,0 +1,4 @@
+enum DateType{
+  from,
+  till;
+}
