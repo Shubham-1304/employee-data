@@ -10,7 +10,9 @@ import 'package:employee_data/utils/style_resources/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EmployeeList extends StatefulWidget {
-  const EmployeeList({super.key});
+  const EmployeeList({required this.topPadding , super.key});
+
+  final double topPadding;
 
   @override
   State<EmployeeList> createState() => _EmployeeListState();
@@ -79,6 +81,9 @@ class _EmployeeListState extends State<EmployeeList> {
       builder: (context, state) {
         return _employees.isNotEmpty
             ? CustomScrollView(slivers: [
+              SliverToBoxAdapter(
+                child: SizedBox(height: widget.topPadding,),
+              ),
                 SliverToBoxAdapter(
                   child: Visibility(
                     visible: _currentEmployees.isNotEmpty,
@@ -127,7 +132,7 @@ class _EmployeeListState extends State<EmployeeList> {
                     itemCount: _previousEmployees.length),
                 SliverToBoxAdapter(
                   child: Visibility(
-                    visible: _previousEmployees.isNotEmpty,
+                    visible: _employees.isNotEmpty,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),

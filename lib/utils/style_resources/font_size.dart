@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ///Font size being used through projects
@@ -5,11 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///it will be reflected in whole app
 class FontSize {
   static double xxxxxs=8.sp;
-  static double xxxs = 12.sp;
-  static double xxs = 14.sp;
-  static double xs = 15.sp;
-  static double s = 16.sp;
-  static double m = 18.sp;
+  static double xxxs = min(12.w,12.h);
+  static double xxs = min(14.w,14.h);
+  static double xs = min(15.w,15.h);
+  static double s = min(16.w,16.h);
+  static double m = min(18.w,18.h);
   static double l = 20.sp;
   static double xl = 22.sp;
   static double xxl = 24.sp;

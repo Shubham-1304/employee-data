@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:employee_data/app/modules/employee/ui/screens/employee_details_screen.dart';
 import 'package:employee_data/app/modules/employee/ui/widgets/appbar.dart';
 import 'package:employee_data/app/modules/employee/ui/widgets/employee_list.dart';
@@ -6,41 +8,62 @@ import 'package:employee_data/utils/style_resources/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class EmployeesScreen extends StatelessWidget {
+class EmployeesScreen extends StatefulWidget {
   const EmployeesScreen({super.key});
   static const String routeName = '/employeesScreen';
+
+  @override
+  State<EmployeesScreen> createState() => _EmployeesScreenState();
+}
+
+class _EmployeesScreenState extends State<EmployeesScreen> {
+  final GlobalKey _firstKey = GlobalKey();
+  double _firstHeight = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Delay height fetch to after build
+    WidgetsBinding.instance.addPostFrameCallback((_) => _getFirstHeight());
+  }
+
+  void _getFirstHeight() {
+    final context = _firstKey.currentContext;
+    if (context != null) {
+      final box = context.findRenderObject() as RenderBox;
+      setState(() {
+        _firstHeight = box.size.height;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: CR.backgroundColor,
-        // appBar: AppBar(
-        //   backgroundColor: Colors.blue,
-        //   title: Text("Employee List",style: Styles.semiBold500StyleM.copyWith(color: Colors.white),),
-        // ),
         body: Stack(
           children: [
-            Positioned.fill(top: 60.h,child: const EmployeeList()),
-            const CustomAppBar(title: "Employee List")
+            EmployeeList(topPadding: _firstHeight,),
+            CustomAppBar(widgetKey: _firstKey, title: "Employee List")
           ],
         ),
         floatingActionButton: InkWell(
-          borderRadius: BorderRadius.circular(8.w),
+          borderRadius: BorderRadius.circular(min(8.w,8.h)),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-            builder: (_) => const EmployeeDetailsScreen(), ));
-
+              builder: (_) => const EmployeeDetailsScreen(),
+            ));
           },
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.w),
+                borderRadius: BorderRadius.circular(min(8.w,8.h)),
                 color: CR.primaryColor),
-            width: 50.w,
-            height: 50.w,
+            width: min(50.w,50.h),
+            height: min(50.w,50.h),
             child: Icon(
               Icons.add,
-              size: 18.sp,
+              size: min(18.w,18.h),
               color: Colors.white,
             ),
           ),

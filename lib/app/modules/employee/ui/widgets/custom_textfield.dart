@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:employee_data/utils/asset_resources.dart/color_resources.dart';
 import 'package:employee_data/utils/style_resources/styles.dart';
 import 'package:flutter/material.dart';
@@ -82,56 +84,53 @@ class _CustomTextFieldState extends State<CustomTextField> {
           padding: EdgeInsets.symmetric(
             horizontal: 10.w,
           ),
-          child: Stack(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Visibility(
-                      visible: widget.prefixIcon != null,
-                      child: widget.prefixIcon!),
-                  Visibility(
-                      visible: widget.prefixIcon != null,
-                      child: SizedBox(
-                        width: 10.w,
-                      )),
-                  Expanded(
-                    child: IgnorePointer(
-                      ignoring: widget.focus.hasFocus,
-                      child: TextField(
-                        onTap: widget.onTapEvent,
-                        keyboardType: widget.keyboardType,
-                        readOnly: widget.readOnly ?? false,
-                        controller: widget.controller,
-                        focusNode: widget.focus,
-                        onChanged: widget.onChanged,
-                        style:
-                            Styles.regularStyleS.copyWith(color: CR.textColor),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 10.w),
-                          hintText: widget.hintText,
-                          labelText: widget.labelText,
-                          hintStyle: Styles.regularStyleS.copyWith(
-                              color: CR.hintColor,
-                              overflow: TextOverflow.ellipsis),
-                        ),
-                      ),
+              Visibility(
+                  visible: widget.prefixIcon != null,
+                  child: widget.prefixIcon!),
+              Visibility(
+                  visible: widget.prefixIcon != null,
+                  child: SizedBox(
+                    width: 10.w,
+                  )),
+              Expanded(
+                child: IgnorePointer(
+                  ignoring: widget.focus.hasFocus,
+                  child: TextField(
+                    onTap: widget.onTapEvent,
+                    keyboardType: widget.keyboardType,
+                    readOnly: widget.readOnly ?? false,
+                    controller: widget.controller,
+                    focusNode: widget.focus,
+                    onChanged: widget.onChanged,
+                    style:
+                        Styles.regularStyleS.copyWith(color: CR.textColor),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      contentPadding: EdgeInsets.only(bottom: min(16.w, 16.h)),
+                      hintText: widget.hintText,
+                      labelText: widget.labelText,
+                      hintStyle: Styles.regularStyleS.copyWith(
+                          color: CR.hintColor,
+                          overflow: TextOverflow.ellipsis),
                     ),
                   ),
-                  Visibility(
-                      visible: widget.suffixWidget != null,
-                      child: SizedBox(
-                        width: 10.w,
-                      )),
-                  Visibility(
-                      visible: widget.suffixWidget != null,
-                      child: widget.suffixWidget ?? const SizedBox.shrink()),
-                ],
+                ),
               ),
+              Visibility(
+                  visible: widget.suffixWidget != null,
+                  child: SizedBox(
+                    width: 10.w,
+                  )),
+              Visibility(
+                  visible: widget.suffixWidget != null,
+                  child: widget.suffixWidget ?? const SizedBox.shrink()),
             ],
           )),
     );

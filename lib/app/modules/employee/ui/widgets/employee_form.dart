@@ -104,23 +104,28 @@ class _EmployeeFormState extends State<EmployeeForm> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: CustomDatePicker(
-                initialDate: selectedFromDate,
-                dateType: DateType.from,
-                onDateSelected: (date) {
-                  setState(() {
-                    selectedFromDate = date!;
-                  });
-                  _fromDateController.text =
-                      DateFormat('d MMM yyyy').format(selectedFromDate);
-                  Navigator.of(context).pop();
-                  _fromDateFocus.unfocus();
+              child: GestureDetector(
+                onTap: () {
+                  
                 },
-                onCancelled: () {
-                  Navigator.of(context).pop();
-                  _fromDateFocus.unfocus();
-                },
-                invalidDates: selectedTillDate,
+                child: CustomDatePicker(
+                  initialDate: selectedFromDate,
+                  dateType: DateType.from,
+                  onDateSelected: (date) {
+                    setState(() {
+                      selectedFromDate = date!;
+                    });
+                    _fromDateController.text =
+                        DateFormat('d MMM yyyy').format(selectedFromDate);
+                    Navigator.of(context).pop();
+                    _fromDateFocus.unfocus();
+                  },
+                  onCancelled: () {
+                    Navigator.of(context).pop();
+                    _fromDateFocus.unfocus();
+                  },
+                  invalidDates: selectedTillDate,
+                ),
               ),
             ),
           );

@@ -8,11 +8,36 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class EmployeeDetailsScreen extends StatelessWidget {
+class EmployeeDetailsScreen extends StatefulWidget {
   const EmployeeDetailsScreen({this.employee, super.key});
   static const String routeName = '/employeeDetailsScreen';
 
   final Employee? employee;
+
+  @override
+  State<EmployeeDetailsScreen> createState() => _EmployeeDetailsScreenState();
+}
+
+class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
+  final GlobalKey _firstKey = GlobalKey();
+  double _firstHeight = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Delay height fetch to after build
+    WidgetsBinding.instance.addPostFrameCallback((_) => _getFirstHeight());
+  }
+
+  void _getFirstHeight() {
+    final context = _firstKey.currentContext;
+    if (context != null) {
+      final box = context.findRenderObject() as RenderBox;
+      setState(() {
+        _firstHeight = box.size.height;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +48,14 @@ class EmployeeDetailsScreen extends StatelessWidget {
         child: Stack(
           children: [
             Positioned.fill(
-                top: 60.h,
+                top: _firstHeight,
                 child: EmployeeForm(
-                  employee: employee,
+                  employee: widget.employee,
                 )),
             CustomAppBar(
+              widgetKey: _firstKey,
               title: "Add Employee Details",
-              actions: employee != null
+              actions: widget.employee != null
                   ? [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -37,7 +63,7 @@ class EmployeeDetailsScreen extends StatelessWidget {
                           onTap: () {
                             context
                                 .read<EmployeeCubit>()
-                                .deleteEmployee(employee!.id!);
+                                .deleteEmployee(widget.employee!.id!);
                             Navigator.of(context).pop();
                           },
                           child: SvgPicture.asset(

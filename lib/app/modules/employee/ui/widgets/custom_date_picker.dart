@@ -201,7 +201,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         Container(
           constraints: BoxConstraints(
               minWidth: 130
-                  .w), //added this constreaint so that icons on side doesn't shift their positions
+                  .w), //added this constraint so that icons on side doesn't shift their positions
           alignment: Alignment.center,
           child: Text(DateFormat('MMMM yyyy').format(_currentMonth),
               style: Styles.semiBold500StyleM.copyWith(color: CR.textColor)),
@@ -361,95 +361,97 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         borderRadius: BorderRadius.circular(16),
         color: Colors.white,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ...(widget.dateType == DateType.from
-              ? _buildQuickSelectFromButtons()
-              : _buildQuickSelectTillButtons()),
-          SizedBox(height: 20.h),
-          _buildCalendarHeader(),
-          const SizedBox(height: 10),
-          _buildDayNames(),
-          const SizedBox(height: 10),
-          ..._buildCalendarDays(),
-          const SizedBox(height: 12),
-          DetailsConfirmButton(
-            onCancel: widget.onCancelled,
-            onSave: () => widget.onDateSelected(_selectedDate),
-            leadingWidget: Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/images/icons/calender_icon.svg',
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  _selectedDate != null
-                      ? DateFormat('d MMM yyyy').format(_selectedDate!)
-                      : "No date",
-                  style: Styles.regularStyleS.copyWith(color: CR.textColor),
-                ),
-              ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ...(widget.dateType == DateType.from
+                ? _buildQuickSelectFromButtons()
+                : _buildQuickSelectTillButtons()),
+            SizedBox(height: 20.h),
+            _buildCalendarHeader(),
+            const SizedBox(height: 10),
+            _buildDayNames(),
+            const SizedBox(height: 10),
+            ..._buildCalendarDays(),
+            const SizedBox(height: 12),
+            DetailsConfirmButton(
+              onCancel: widget.onCancelled,
+              onSave: () => widget.onDateSelected(_selectedDate),
+              leadingWidget: Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/images/icons/calender_icon.svg',
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    _selectedDate != null
+                        ? DateFormat('d MMM yyyy').format(_selectedDate!)
+                        : "No date",
+                    style: Styles.regularStyleS.copyWith(color: CR.textColor),
+                  ),
+                ],
+              ),
             ),
-          ),
-          // Divider(
-          //   color: CR.backgroundColor,
-          //   height: 2.h,
-          // ),
-          // Row(
-          //   children: [
-          //     SvgPicture.asset(
-          //       'assets/images/icons/calender_icon.svg',
-          //     ),
-          //     const SizedBox(width: 10),
-          //     Text(
-          //       _selectedDate != null
-          //           ? DateFormat('d MMM yyyy').format(_selectedDate!)
-          //           : "No date",
-          //       style: Styles.regularStyleS.copyWith(color: CR.textColor),
-          //     ),
-          //     const Spacer(),
-          //     InkWell(
-          //       onTap: widget.onCancelled,
-          //       child: Container(
-          //         padding:
-          //             const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-          //         decoration: BoxDecoration(
-          //           color: CR.secondaryColor,
-          //           borderRadius: BorderRadius.circular(4),
-          //         ),
-          //         child: Center(
-          //           child: Text(
-          //             "Cancel",
-          //             style: Styles.semiBold500StyleXXS.copyWith(
-          //               color: CR.primaryColor,
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //     const SizedBox(width: 10),
-          //     ElevatedButton(
-          //       onPressed: () {
-          //         widget.onDateSelected(_selectedDate);
-          //         // Navigator.of(context).pop();
-          //       },
-          //       style: ElevatedButton.styleFrom(
-          //           backgroundColor: Colors.blue,
-          //           padding:
-          //               EdgeInsets.symmetric(horizontal: 21.w, vertical: 12.h),
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(6),
-          //           )),
-          //       child: Text(
-          //         'Save',
-          //         style:
-          //             Styles.semiBold500StyleXXS.copyWith(color: Colors.white),
-          //       ),
-          //     ),
-          //   ],
-          // ),
-        ],
+            // Divider(
+            //   color: CR.backgroundColor,
+            //   height: 2.h,
+            // ),
+            // Row(
+            //   children: [
+            //     SvgPicture.asset(
+            //       'assets/images/icons/calender_icon.svg',
+            //     ),
+            //     const SizedBox(width: 10),
+            //     Text(
+            //       _selectedDate != null
+            //           ? DateFormat('d MMM yyyy').format(_selectedDate!)
+            //           : "No date",
+            //       style: Styles.regularStyleS.copyWith(color: CR.textColor),
+            //     ),
+            //     const Spacer(),
+            //     InkWell(
+            //       onTap: widget.onCancelled,
+            //       child: Container(
+            //         padding:
+            //             const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+            //         decoration: BoxDecoration(
+            //           color: CR.secondaryColor,
+            //           borderRadius: BorderRadius.circular(4),
+            //         ),
+            //         child: Center(
+            //           child: Text(
+            //             "Cancel",
+            //             style: Styles.semiBold500StyleXXS.copyWith(
+            //               color: CR.primaryColor,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     const SizedBox(width: 10),
+            //     ElevatedButton(
+            //       onPressed: () {
+            //         widget.onDateSelected(_selectedDate);
+            //         // Navigator.of(context).pop();
+            //       },
+            //       style: ElevatedButton.styleFrom(
+            //           backgroundColor: Colors.blue,
+            //           padding:
+            //               EdgeInsets.symmetric(horizontal: 21.w, vertical: 12.h),
+            //           shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(6),
+            //           )),
+            //       child: Text(
+            //         'Save',
+            //         style:
+            //             Styles.semiBold500StyleXXS.copyWith(color: Colors.white),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+          ],
+        ),
       ),
     );
   }
